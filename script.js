@@ -68,14 +68,12 @@ function holdEvent() {
         playerTwo.classList.remove("player--active");
     }
 
-    if ((playerOneTotal >= 10) && (playerTwoTotal <= 10)) {
-        console.log("Oya naw");
+    if ((playerOneTotal >= 100) && (playerTwoTotal <= 100)) {
         document.getElementById("name--0").textContent = "Winner!";
         playerOne.classList.add("player--winner");
         hold.removeEventListener('click', holdEvent);
         roll.removeEventListener('click', rollDice);
-    } else if ((playerOneTotal <= 10) && (playerTwoTotal >= 10)) {
-        console.log("Player Two");
+    } else if ((playerOneTotal <= 100) && (playerTwoTotal >= 100)) {
         document.getElementById("name--1").textContent = "Winner!";
         playerTwo.classList.add("player--winner");
         hold.removeEventListener('click', holdEvent);
