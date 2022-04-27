@@ -2,6 +2,7 @@
 
 let roll = document.querySelector(".btn--roll")
 let hold = document.querySelector(".btn--hold");
+let dice = document.querySelector(".dice");
 let score = 0;
 let currentScore = 0;
 let playerOne = document.querySelector(".player--0");
@@ -11,25 +12,17 @@ let playerTwoScore = document.getElementById("score--1");
 let playerOneTotal = parseInt(playerOneScore.textContent, 10);
 let playerTwoTotal = parseInt(playerTwoScore.textContent, 10);
 
-const diceImages = [
-    'dice-1.png',
-    'dice-2.png',
-    'dice-3.png',
-    'dice-4.png',
-    'dice-5.png',
-    'dice-6.png'
-];
-
 playerOneScore.textContent = 0;
 playerTwoScore.textContent = 0;
+dice.classList.add("hidden");
 
 function rollDice() {
 
-    let randomNumber = Math.floor(Math.random() * 6);
-    document.querySelector(".dice").setAttribute('src', diceImages[randomNumber]);
+    let randomNumber = Math.floor(Math.random() * 6) + 1;
+    dice.setAttribute('src', `dice-${randomNumber}.png`);
+    dice.classList.remove("hidden");
 
-    score = randomNumber + 1;
-    currentScore += score;
+    currentScore += randomNumber;
 
     if (playerOne.classList.contains("player--active")) {
         document.getElementById("current--0").textContent = currentScore;
@@ -37,8 +30,7 @@ function rollDice() {
         document.getElementById("current--1").textContent = currentScore;
     }
 
-    if (diceImages[randomNumber] === diceImages[0]) {
-        console.log("Gbayii");
+    if (randomNumber === 1) {
         if ((playerOne.classList.contains("player--active"))) {
             currentScore = 0;
             document.getElementById("current--0").textContent = currentScore;
@@ -76,13 +68,13 @@ function holdEvent() {
         playerTwo.classList.remove("player--active");
     }
 
-    if ((playerOneTotal >= 100) && (playerTwoTotal <= 100)) {
+    if ((playerOneTotal >= 10) && (playerTwoTotal <= 10)) {
         console.log("Oya naw");
         document.getElementById("name--0").textContent = "Winner!";
         playerOne.classList.add("player--winner");
         hold.removeEventListener('click', holdEvent);
         roll.removeEventListener('click', rollDice);
-    } else if ((playerOneTotal <= 100) && (playerTwoTotal >= 100)) {
+    } else if ((playerOneTotal <= 10) && (playerTwoTotal >= 10)) {
         console.log("Player Two");
         document.getElementById("name--1").textContent = "Winner!";
         playerTwo.classList.add("player--winner");
@@ -108,5 +100,7 @@ document.querySelector(".btn--new").addEventListener('click', () => {
     document.getElementById("current--1").textContent = currentScore;
     playerOne.classList.add("player--active");
     playerTwo.classList.remove("player--active");
-    document.querySelector(".dice").setAttribute('src', 'dice-5.png');
+    dice.classList.add("hidden");
+    roll.addEventListener('click', rollDice);
+    hold.addEventListener('click', holdEvent);
 });
